@@ -1,0 +1,34 @@
+.user-row{ display:flex; margin:50px 15%; min-width:850px;}
+.user-row img{ min-width:200px; min-height:200px; height:200px;object-fit:contain; border:1px solid rgba(128,128,128,0.5);}
+.user-row .intro{margin-left:100px; width:100%;}
+.user-row .intro #greeting-wrap{border: 1px solid #CCCCCC; width:100%; height:60%;}
+.user-row .intro h2 {font-size:30pt; font-family:'나눔고딕'; text-transform:none; font-variant:unset; margin:0; padding:0;}
+.user-row .intro h3 {font-size:20pt; font-family:'나눔고딕'; text-transform:none; font-variant:unset;}
+.user-row .intro h4 {font-size:15pt; font-family:'나눔고딕'; text-transform:none; font-variant:unset;}
+
+.information {margin:30px 15%; min-width:850px;}
+.information h2 {font-size:15pt; font-family:'나눔고딕'; text-transform:none; font-variant:unset; margin:0;}
+.information ul {display:flex; justify-content:center; margin:0; padding:0;}
+.information ul li:first-child{background-color:white; border-bottom:none;}
+.information ul li{flex-grow:1; display:flex;align-items:center;justify-content:center; height:50px; list-style-type:none;
+                border:1px solid black; border-right:none; background-color:#0F0F0F08; font-size:12pt; font-family:Verdana, Geneva, Tahoma, sans-serif;}
+.information ul li:last-child{border-right:1px solid black;}
+.information > div{border:1px solid grey; border-top:none; min-height:100px;}
+
+.information #datas {padding: 10px 20px;}
+#datas .item{display:flex;width:100%; height:150px;border:1px solid #CCCCCCFC;padding:0;margin:5px 5px;}
+#datas .prd-data{display:flex;width:100%;}
+#datas .prd-data img{min-width:150px; min-height:150px; max-width:150px; object-fit:contain; margin:0 20px 0 0;}
+#datas .prd-data .prd-info{margin:15px 10px;}
+#datas .prd-data h3{font-family:'나눔고딕'; text-transform:none; font-variant:unset; margin:0; font-size:12pt; font-weight:bold;}
+#datas .prd-data h4{font-family:'나눔고딕'; text-transform:none; font-variant:unset; margin:0; font-size:12pt; font-weight:normal;}
+#datas .prd-down{height:100%; display:flex; justify-content:center; align-items:center;margin-left:auto; margin-right:20px; font-size:30pt;}
+#datas .prd-up{height:100%; display:flex; justify-content:center; align-items:center;margin-left:auto; margin-right:20px; font-size:30pt;}
+p {margin:0;}
+
+@media screen and (max-width:978px){
+    .user-row{margin:50px 10%; min-width:550px;}
+    .user-row .intro{margin-left:50px; width:100%;}
+    .information {margin:30px 10%; min-width:550px;}
+    .information .prd-data{flex-grow:1;}
+}

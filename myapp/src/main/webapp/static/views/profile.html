@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html lang="">
+<head>
+<title>Final Project</title>
+<meta charse="utf-8">
+<link href="../../public/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+<link href="../../public/styles/profile.css" rel="stylesheet" type="text/css" media="all">
+</head>
+<body id="top">
+
+<div class="wrapper row0">
+  <div id="topbar" class="hoc clear"> 
+    <!-- ################################################################################################ -->
+    <div class="fl_left">
+      <ul class="nospace">
+        <li><a href="../../index.html"><i class="fas fa-home fa-lg"></i></a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="fl_right">
+      <ul id="auth" class="nospace">
+        <li><a href="#">Register</a></li>
+        <li><a href="#">Login</a> </li>
+      </ul>
+    </div>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+
+<div class="wrapper row1">
+    <header id="header" class="hoc clear"> 
+      <!-- ################################################################################################ -->
+      <div id="logo" class="one_quarter first">
+        <h1><a href="../../index.html">Flea Market</a></h1>
+      </div>
+      <div class="two_quarter">
+        <form id="search-form" action="list.html" method="get">
+          <input type="text" id="search-bar" name="search-bar">
+          <!-- submit is implemented as div -->
+          <div id="search-btn" onclick="sendForm()"><i class="fas fa-search"></i></div>
+        </form>
+      </div>
+      <div class="one_quarter">
+        <ul id="auth" class="nospace">
+          <!-- there would be different thing inside -->
+          <li><a href="profile.html"><i class="fas fa-user"></i>&nbsp;My</a></li>
+          <li><a href="sell.html"><i class="fas fa-dollar-sign"></i>&nbsp;Sell</a></li>
+          <li><a href="#"><i class="fas fa-shopping-cart"></i>&nbsp;Cart</a></li>
+        </ul>
+      </div>
+      <!-- ################################################################################################ -->
+    </header>
+</div>
+
+<hr>
+<div class="user-row">
+  <img id="profile-img" src="../images/user.png">
+  <div class="intro">
+    <h2 id="name">username</h2><hr>
+    <h4 id="greeting">hi</h4>
+  </div>
+</div>
+
+
+<div class="information">
+  <ul id="infobtns">
+    <li id="sell_btn"> SellList </li>
+    <li id="hist_btn"> BuyList </li>
+    <li id="wish_btn"> Wishlist </li>
+    <li id="comm_btn"> Profile </li>
+  </ul>
+
+  <div id="datas">
+    <p></p>
+    <article></article>
+  </div>
+</div>
+
+
+</body>
+<script src="../../public/scripts/jquery.min.js"></script>
+<script src="../../public/scripts/jquery.backtotop.js"></script>
+<script src="../../public/scripts/jquery.mobilemenu.js"></script>
+<script src="../../public/scripts/js-cookie.js" type="text/javascript" ></script>
+<script src="../../public/scripts/profile.js"></script>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html lang="">
+<head>
+<title>Final Project</title>
+<meta charset="utf-8">
+<link href="../../public/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+<link href="../../public/styles/product.css" rel="stylesheet" type="text/css" media="all">
+</head>
+<body id="top">
+
+<div class="wrapper row0">
+  <div id="topbar" class="hoc clear"> 
+    <!-- ################################################################################################ -->
+    <div class="fl_left">
+      <ul class="nospace">
+        <li><a href="../../index.html"><i class="fas fa-home fa-lg"></i></a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="fl_right">
+      <ul id="auth" class="nospace">
+        <li><a href="#">Register</a></li>
+        <li><a href="#">Login</a> </li>
+      </ul>
+    </div>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+
+<div class="wrapper row1">
+    <header id="header" class="hoc clear"> 
+      <!-- ################################################################################################ -->
+      <div id="logo" class="one_quarter first">
+        <h1><a href="../../index.html">Flea Market</a></h1>
+      </div>
+      <div class="two_quarter">
+        <form id="search-form" action="list.html" method="get">
+          <input type="text" id="search-bar" name="search-bar">
+          <!-- submit is implemented as div -->
+          <div id="search-btn" onclick="sendForm()"><i class="fas fa-search"></i></div>
+        </form>
+      </div>
+      <div class="one_quarter">
+        <ul class="nospace">
+          <!-- there would be different thing inside -->
+          <li><a href="profile.html"><i class="fas fa-user"></i>&nbsp;My</a></li>
+          <li><a href="sell.html"><i class="fas fa-dollar-sign"></i>&nbsp;Sell</a></li>
+          <li><a href="http://localhost:8080/myapp/static/views/cart.html"><i class="fas fa-shopping-cart"></i>&nbsp;Cart</a></li>
+        </ul>
+      </div>
+      <!-- ################################################################################################ -->
+    </header>
+</div>
+
+<hr>
+<div class="product-row">
+  <img id="product-img">
+  <div class="intro">
+    <h1 id="name"></h1>
+    <h2 id="price"></h2>
+    <hr><h5 id="bidder-name"></h5>
+    <h3 id="time"></h3>
+
+    <div id="bid-wrap">
+      <form id="bid-form" class="bid-btns" action="http://localhost:8080/myapp/server/bid.jsp" method="GET">
+        <input type="number" id="bid-price" name="curPrice">
+        <input id="bid-id" name="prdId">
+        <input id="bid-user" name="bidderName">
+        <div id="bid-submit">Bid</div>
+      </form>
+      <div class="bid-btns">
+        <div id="bid-buy">Buy</div>
+        <div id="bid-cart">Add&nbsp;<i class="fas fa-shopping-cart"></i></div>
+        <div id="bid-wishlist"><i class="far fa-heart"></i>&nbsp;Wish</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="information">
+  <ul id="infobtns">
+    <li id="seller_btn"> Seller Info </li>
+    <li id="desc_btn"> Description </li>
+    <li id="comm_btn"> Comment </li>
+  </ul>
+  <div>
+    <div id="seller-info" class="user-row">
+      <img id="seller-img" src="../images/user.png">
+      <div class="intro">
+        <h2 id="seller-name">username</h2><hr>
+        <div>
+          <h5>Tel</h5>
+          <h3 id="place"></h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="description"></div>
+
+
+
+  <div id="comment">
+    <h2>Comments</h2>
+    <div id="history"></div>
+    <form id="comm-form" action="../../server/product.jsp" method="POST">
+      <textarea id="comm-field"></textarea>
+      <div id="submit-wrap">
+        <div id="counter">0 / 100</div>
+        <div id="comm-submit"><i class="fas fa-pencil-alt"></i>Submit</div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+</body>
+<script src="../../public/scripts/jquery.min.js"></script>
+<script src="../../public/scripts/jquery.backtotop.js"></script>
+<script src="../../public/scripts/jquery.mobilemenu.js"></script>
+<script src="../../public/scripts/js-cookie.js" type="text/javascript" ></script>
+<script src="../../public/scripts/product.js"></script>
+</html>

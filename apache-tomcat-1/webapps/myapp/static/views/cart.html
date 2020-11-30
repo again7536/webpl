@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html lang="">
+<head>
+<title>Final Project</title>
+<meta charset="utf-8">
+<link href="../../public/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+<link href="../../public/styles/cart.css" rel="stylesheet" type="text/css" media="all">
+</head>
+<body id="top">
+
+<div class="wrapper row0">
+  <div id="topbar" class="hoc clear"> 
+    <!-- ################################################################################################ -->
+    <div class="fl_left">
+      <ul class="nospace">
+        <li><a href="http://localhost:8080/myapp/index.html"><i class="fas fa-home fa-lg"></i></a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="fl_right">
+      <ul id="auth" class="nospace">
+        <li><a href="static/views/register.html">Register</a></li>
+        <li><a href="static/views/login.html">Login</a> </li>
+      </ul>
+    </div>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+
+<div class="wrapper row1">
+    <header id="header" class="hoc clear">
+      <!-- ################################################################################################ -->
+      <div id="logo" class="one_quarter first">
+        <h1><a href="http://localhost:8080/myapp/index.html">Flea Market</a></h1>
+      </div>
+      <div class="two_quarter">
+        <form id="search-form" action="http://localhost:8080/myapp/static/views/list.html" method="get">
+          <input type="text" id="search-bar" name="search-bar">
+          <!-- submit is implemented as div -->
+          <div id="search-btn" onclick="sendForm()"><i class="fas fa-search"></i></div>
+        </form>
+      </div>
+      <div class="one_quarter">
+        <ul class="nospace">
+          <!-- there would be different thing inside -->
+          <li><a href="http://localhost:8080/myapp/static/views/profile.html"><i class="fas fa-user"></i>&nbsp;My</a></li>
+          <li><a href="http://localhost:8080/myapp/static/views/sell.html"><i class="fas fa-dollar-sign"></i>&nbsp;Sell</a></li>
+          <li><a href="http://localhost:8080/myapp/static/views/cart.html"><i class="fas fa-shopping-cart"></i>&nbsp;Cart</a></li>
+        </ul>
+      </div>
+      <!-- ################################################################################################ -->
+    </header>
+</div>
+
+<div id="cart">
+<div id="cart-wrap">
+  <div id="header">Cart</div><hr>
+  <ul id="cart-list">
+  </ul>
+  <hr>
+  <div id="item-total">
+    <h2>Total:</h2>
+    <h2 id="total-val"></h2>
+  </div>
+  <div id="cart-btn">Buy</div>
+</div>
+</div>
+
+</body>
+<script src="../../public/scripts/jquery.min.js"></script>
+<script src="../../public/scripts/jquery.backtotop.js"></script>
+<script src="../../public/scripts/jquery.mobilemenu.js"></script>
+<script src="../../public/scripts/js-cookie.js" type="text/javascript" ></script>
+<script src="../../public/scripts/cart.js" type="text/javascript" ></script>
+</html>

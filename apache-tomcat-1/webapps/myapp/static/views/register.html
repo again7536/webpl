@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Final Project</title>
+<meta charse="utf-8">
+<link href="../../public/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+<link href="../../public/styles/register.css" rel="stylesheet" type="text/css" media="all">
+</head>
+<body id="top">
+
+<div class="wrapper row1">
+<header id="header" class="hoc clear center"> 
+    <div id="logo">
+        <h1><a href="../../index.html">Flea Market</a></h1>
+    </div>
+</header>
+</div>
+
+<div class="wrapper row2">
+    <form id="regi-form" class="center" action="http://localhost:8080/myapp/server/register.jsp" method="post">
+    <div class="center">
+        <i class="far fa-envelope center"></i>
+        <input type="text" id="user-id" name="userId" placeholder="e-mail or ID">
+    </div>
+    <div class="center">
+        <i class="fas fa-unlock center"></i>
+        <input type="password" id="user-pw" name="userPw" placeholder="password"> 
+    </div>
+    <div class="center">
+        <i class="fas fa-lock center"></i>
+        <input type="password" id="pw-remind" placeholder="remind password"> 
+    </div>
+    <div class="center">
+        <i class="far fa-user center"></i>
+        <input type="text" id="user-name" name="userName" placeholder="username">
+    </div>
+    <div id="submit-btn" class="center">Register</div>
+    </form>
+</div>
+
+</body>
+<script src="../../public/scripts/jquery.min.js"></script>
+<script src="../../public/scripts/jquery.backtotop.js"></script>
+<script src="../../public/scripts/jquery.mobilemenu.js"></script>
+<script src="../../public/scripts/register.js" type="text/javascript" ></script>
+</html>

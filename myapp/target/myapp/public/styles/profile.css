@@ -1,0 +1,17 @@
+.user-row{ display:flex; margin:50px 15%;}
+.user-row img{ min-width:200px; min-height:200px; height:200px;object-fit:contain; border:1px solid rgba(128,128,128,0.5);}
+.user-row .intro{margin-left:100px; width:100%;}
+.user-row .intro h2 {font-size:30pt; font-family:'나눔고딕'; text-transform:none; font-variant:unset;}
+.user-row .intro h3 {font-size:20pt; font-family:'나눔고딕'; text-transform:none; font-variant:unset;}
+.user-row .intro h4 {font-size:15pt; font-family:'나눔고딕'; text-transform:none; font-variant:unset;}
+
+.information {margin:30px 10%;}
+.information h2 {font-size:15pt; font-family:'나눔고딕'; text-transform:none; font-variant:unset; margin:0;}
+.information ul {display:flex; justify-content:center; margin:0; padding:0;}
+.information ul li:first-child{background-color:white; border-bottom:none;}
+.information ul li{flex-grow:1; display:flex;align-items:center;justify-content:center; height:50px; list-style-type:none;
+                border:1px solid black; border-right:none; background-color:#0F0F0F08; font-size:12pt; font-family:Verdana, Geneva, Tahoma, sans-serif;}
+.information ul li:last-child{border-right:1px solid black;}
+.information > div{border:1px solid grey; border-top:none; min-height:100px;}
+
+p {margin:0;}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html lang="">
+<head>
+<title>Final Project</title>
+<meta charse="utf-8">
+<link href="../../public/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+<link href="../../public/styles/sell.css" rel="stylesheet" type="text/css" media="all">
+</head>
+<body id="top">
+
+<div id="sticky-container">
+<div class="wrapper row0">
+  <div id="topbar" class="hoc clear"> 
+    <!-- ################################################################################################ -->
+    <div class="fl_left">
+      <ul class="nospace">
+        <li><a href="../../index.html"><i class="fas fa-home fa-lg"></i></a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="fl_right">
+      <ul id="auth" class="nospace">
+        <li><a href="#">Register</a></li>
+        <li><a href="#">Login</a> </li>
+      </ul>
+    </div>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+
+<div class="wrapper row1">
+    <header id="header" class="hoc clear"> 
+      <!-- ################################################################################################ -->
+      <div id="logo" class="one_quarter first">
+        <h1><a href="../../index.html">Flea Market</a></h1>
+      </div>
+      <div class="two_quarter">
+        <form id="search-form" action="list.html" method="get">
+          <input type="text" id="search-bar" name="search-bar">
+          <!-- submit is implemented as div -->
+          <div id="search-btn" onclick="sendForm()"><i class="fas fa-search"></i></div>
+        </form>
+      </div>
+      <div class="one_quarter">
+        <ul class="nospace">
+          <!-- there would be different thing inside -->
+          <li><a href="profile.html"><i class="fas fa-user"></i>&nbsp;My</a></li>
+          <li><a href="sell.html"><i class="fas fa-dollar-sign"></i>&nbsp;Sell</a></li>
+          <li><a href="#"><i class="fas fa-shopping-cart"></i>&nbsp;Cart</a></li>
+        </ul>
+      </div>
+      <!-- ################################################################################################ -->
+    </header>
+</div>
+
+<hr>
+<form class="upload-form" action="../../server/sell.jsp" method="POST" enctype="multipart/form-data">
+    <h2>Product Information</h2><hr>
+    <input type="file" id="upload-img" name="image" hidden>
+    <h3>Image</h3>
+    <img id="preview">
+    <hr><h3>Title</h3>
+    <input type="text" id="title" name="title">
+    <hr><h3>Price</h3>
+    <input type="text" id="price" name="price" placeholder="If it is 0, bidding would be active!">
+    <hr><h3>Date</h3>
+    <input type="date" id="date" name="date">
+    <hr><h3>Time</h3>
+    <input type="time" id="time" name="time">
+    <hr><h3>Place</h3>
+    <input type="text" id="place" name="place">
+    <hr><h3>Telephone</h3>
+    <input type="text" id="phone" name="phone">
+    <hr><h3>Description</h3>
+    <textarea id="article" name="article"></textarea>
+    <hr><h3>Tags</h3>
+    <input type="text" id="tags" name="tags">
+    <input id="username" name="username">
+</form>
+<div id="submit-wrap">
+    <div id="submit-btn">Enroll</div>
+</div>
+</div>
+
+
+</body>
+<script src="../../public/scripts/jquery.min.js"></script>
+<script src="../../public/scripts/jquery.backtotop.js"></script>
+<script src="../../public/scripts/jquery.mobilemenu.js"></script>
+<script src="../../public/scripts/js-cookie.js"></script>
+<script src="../../public/scripts/sell.js"></script>
+</html>
