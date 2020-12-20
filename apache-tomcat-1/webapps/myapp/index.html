@@ -36,9 +36,20 @@
       </div>
       <div class="two_quarter">
         <form id="search-form" action="http://localhost:8080/myapp/static/views/list.html" method="get">
-          <input type="text" id="search-bar" name="search-bar">
-          <!-- submit is implemented as div -->
-          <div id="search-btn" onclick="sendForm()"><i class="fas fa-search"></i></div>
+          <div id="search-box">
+            <input type="text" id="search-bar" name="product" autocomplete="off">
+            <!-- submit is implemented as div -->
+            <div id="search-btn"><i class="fas fa-search"></i></div>
+          </div>
+          <div id="search-option">
+            <div class="options">
+              Seller Name : <input type="text" name="seller">
+            </div>
+            <div class="options">
+              Price : <input type="text" name="min-price">
+              ~ <input type="text" name="max-price">
+            </div>
+          </div>
         </form>
       </div>
       <div class="one_quarter">
@@ -56,25 +67,13 @@
 <div id="carousel">
 <div id="left-btn"><div style="text-align:right;width:100%;">&lt;</div></div>
 <div id="slider">
-  <div class="wrapper bgded overlay" style="background-image:url('https://eskipaper.com/images/high-resolution-photos-1.jpg');">
+  <div class="wrapper bgded overlay" style="background-image:url('static/images/gallery/market.jpg');">
     <div id="pageintro" class="hoc clear"> 
       <!-- ################################################################################################ -->
       <article>
-        <p>Today's hot deal</p>
-        <h3 class="heading">Off up to 70%</h3>
-        <p>Don't miss this opportunity!</p>
-        <footer><a class="btn" href="#">Shop Now</a></footer>
-      </article>
-      <!-- ################################################################################################ -->
-    </div>
-  </div>
-  <div class="wrapper bgded overlay" style="background-image:url('images/demo/backgrounds/01.png');">
-    <div id="pageintro" class="hoc clear"> 
-      <!-- ################################################################################################ -->
-      <article>
-        <p>Today's hot deal</p>
-        <h3 class="heading">Off up to 70%</h3>
-        <p>Don't miss this opportunity!</p>
+        <p>Your small market</p>
+        <h3 class="heading">Try it now!</h3>
+        <p>NO.1 open auction platform</p>
         <footer><a class="btn" href="#">Shop Now</a></footer>
       </article>
       <!-- ################################################################################################ -->
@@ -92,14 +91,26 @@
       <!-- ################################################################################################ -->
     </div>
   </div>
-  <div class="wrapper bgded overlay" style="background-image:url('images/demo/backgrounds/01.png');">
+  <div class="wrapper bgded overlay" style="background-image:url('static/images/gallery/christmas.png');">
     <div id="pageintro" class="hoc clear"> 
       <!-- ################################################################################################ -->
       <article>
-        <p>Today's hot deal</p>
-        <h3 class="heading">Off up to 70%</h3>
-        <p>Don't miss this opportunity!</p>
+        <p>Christmas Items</p>
+        <h3 class="heading">Buy now!</h3>
+        <p>Prepare for your christmas</p>
         <footer><a class="btn" href="#">Shop Now</a></footer>
+      </article>
+      <!-- ################################################################################################ -->
+    </div>
+  </div>
+  <div class="wrapper bgded overlay" style="background-image:url('static/images/gallery/hand.png');">
+    <div id="pageintro" class="hoc clear"> 
+      <!-- ################################################################################################ -->
+      <article>
+        <p>Campagne </p>
+        <h3 class="heading">Help Your Neighbor!</h3>
+        <p>Please donate items for them</p>
+        <footer><a class="btn" href="#">Donate</a></footer>
       </article>
       <!-- ################################################################################################ -->
     </div>
@@ -119,31 +130,27 @@
       </div>
       <ul id="products" class="nospace group">
         <li class="one_quarter first">
-          <article><a href="#"><img src="https://simage-kr.uniqlo.com/goods/31/13/47/96/431599_COL_COL49_1000.jpg">
-            <h6 class="heading">Brown Shirt</h6>
-            <h6 class="heading">$20</h6>
-            <p>ff</p></a>
+          <article><a href="#"><img src="https://images-na.ssl-images-amazon.com/images/I/31KbTIluQ1L._SY355_.jpg">
+            <h6 class="heading">Earphones</h6>
+            <h6 class="heading">&#8361;15000</h6>
           </article>
         </li>
         <li class="one_quarter">
-          <article><a href="#"><img src="https://simage-kr.uniqlo.com/goods/31/12/22/45/418704_COL_COL69_1000.jpg">
-            <h6 class="heading">Black Shirt</h6>
-            <h6 class="heading">$30</h6>
-            <p>ff</p></a>
+          <article><a href="#"><img src="https://i2.wp.com/ceklog.kindel.com/wp-content/uploads/2013/02/firefox_2018-07-10_07-50-11.png">
+            <h6 class="heading">Apple</h6>
+            <h6 class="heading">&#8361;2000</h6>
           </article>
         </li>
         <li class="one_quarter">
-          <article><a href="#"><img src="https://www-s.mlo.me/upen/v/201901/20190111/ead94e8a-152f-4f3a-a582-4262aa0b13bb.jpg">
-            <h6 class="heading">Muscle Shirt</h6>
-            <h6 class="heading">$60</h6>
-            <p>ff</p></a>
+          <article><a href="#"><img src="https://store.soapseoul.com/wp-content/uploads/2020/06/ItaewonunitedWHFR.jpg">
+            <h6 class="heading">Shirt</h6>
+            <h6 class="heading">&#8361;30000</h6>
           </article>
         </li>
         <li class="one_quarter">
-          <article><a href="#"><img src="https://www-s.mlo.me/upen/v/201901/20190111/ead94e8a-152f-4f3a-a582-4262aa0b13bb.jpg">
-            <h6 class="heading">Muscle Shirt</h6>
-            <h6 class="heading">$60</h6>
-            <p>ff</p></a>
+          <article><a href="#"><img src="https://www.ikea.com/kr/en/images/products/vaerdera-coffee-cup-and-saucer-white__0711123_PE727991_S5.JPG?f=s">
+            <h6 class="heading">Cup</h6>
+            <h6 class="heading">&#8361;7000</h6>
           </article>
         </li>
       </ul>
@@ -159,8 +166,8 @@
 <div class="wrapper coloured">
   <article class="hoc cta clear"> 
     <!-- ################################################################################################ -->
-    <h6 class="three_quarter first">Dis parturient montes nascetur ridiculus mus vivamus</h6>
-    <footer class="one_quarter"><a class="btn" href="#">Porta risus purus</a></footer>
+    <h6 class="three_quarter first">Welcome To No.1 open auction platform: Flea Market</h6>
+    <footer class="one_quarter"><a class="btn" href="#">Try it now</a></footer>
     <!-- ################################################################################################ -->
   </article>
 </div>
@@ -241,15 +248,13 @@
   <footer id="footer" class="hoc clear"> 
     <!-- ################################################################################################ -->
     <div class="one_quarter first">
-      <h6 class="heading">Nulla ullamcorper</h6>
+      <h6 class="heading">Contact</h6>
       <ul class="nospace btmspace-30 linklist contact">
         <li><i class="fas fa-map-marker-alt"></i>
-          <address>
-          Street Name &amp; Number, Town, Postcode/Zip
-          </address>
+          <address>자연과학캠퍼스 (16419) 경기도 수원시 장안구 서부로 2066</address>
         </li>
-        <li><i class="fas fa-phone"></i> +00 (123) 456 7890</li>
-        <li><i class="far fa-envelope"></i> info@domain.com</li>
+        <li><i class="fas fa-phone"></i> 031.290.5114</li>
+        <li><i class="far fa-envelope"></i> hongxing107@gmail.com</li>
       </ul>
       <ul class="faico clear">
         <li><a class="faicon-facebook" href="#"><i class="fab fa-facebook"></i></a></li>
@@ -259,28 +264,28 @@
       </ul>
     </div>
     <div class="one_quarter">
-      <h6 class="heading">Dignissim nibh ut</h6>
+      <h6 class="heading">Customer Service</h6>
       <ul class="nospace linklist">
-        <li><a href="#">Natoque penatibus et magnis</a></li>
-        <li><a href="#">Dis parturient montes</a></li>
-        <li><a href="#">Nascetur ridiculus mus</a></li>
-        <li><a href="#">Vestibulum tincidunt nisi</a></li>
-        <li><a href="#">Sed eleifend scelerisque</a></li>
+        <li><a href="#">Subscription for market news</a></li>
+        <li><a href="#">Offer daily discount</a></li>
+        <li><a href="#">Scam proof solution</a></li>
+        <li><a href="#">Easy refund service</a></li>
+        <li><a href="#">Fast product delievery</a></li>
       </ul>
     </div>
     <div class="one_quarter">
-      <h6 class="heading">Vestibulum cras placerat</h6>
+      <h6 class="heading">Information</h6>
       <ul class="nospace linklist">
-        <li><a href="#">Maecenas vestibulum molestie</a></li>
-        <li><a href="#">Arcu cras sed tincidunt</a></li>
-        <li><a href="#">Enim maecenas sed mi dictum</a></li>
-        <li><a href="#">Dolor laoreet fringilla</a></li>
-        <li><a href="#">Augue curabitur lobortis</a></li>
+        <li><a href="#">How can I visit office</a></li>
+        <li><a href="#">How to see seller profile</a></li>
+        <li><a href="#">Which method of payment allowed</a></li>
+        <li><a href="#">How to make a bid</a></li>
+        <li><a href="#">What to do after bidding</a></li>
       </ul>
     </div>
     <div class="one_quarter">
-      <h6 class="heading">Vulputate cum sociis</h6>
-      <p class="nospace btmspace-15">Diam nulla id condimentum magna scelerisque ac suspendisse viverra est purus.</p>
+      <h6 class="heading">Subscribe</h6>
+      <p class="nospace btmspace-15">Subscribe our page for daily discount and events.</p>
       <form method="post" action="#">
         <fieldset>
           <legend>Newsletter:</legend>

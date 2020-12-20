@@ -1,7 +1,6 @@
 const searchForm = $('#search-form');
 const searchBar = $('#search-bar');
 const urlParams = new URLSearchParams(window.location.search);
-searchBar.value = urlParams.get('search-bar');
 const userNameVal = Cookies.get('username');
 const prdId = urlParams.get('id');
 let b_wish = false;
@@ -14,12 +13,21 @@ function showTime(endTime) {
     let diff = Date.parse(endTime) - Date.now();
     let msec = diff;
     let hh = Math.floor(msec / 1000 / 60 / 60);
-    msec -= hh * 1000 * 60 * 60;
-    let mm = Math.floor(msec / 1000 / 60);
-    msec -= mm * 1000 * 60;
-    let ss = Math.floor(msec / 1000);
-    msec -= ss * 1000;
-    $('#time').text(hh +':'+ mm + ':' + ss);
+    if(diff < 0) window.location.reload();
+    if(hh>=72) {
+        let dd = Math.floor(msec / 24 / 1000 / 60 / 60);
+        $('#time').text(dd +' days left')
+    }
+    else {
+        msec -= hh * 1000 * 60 * 60;
+        let mm = Math.floor(msec / 1000 / 60);
+        msec -= mm * 1000 * 60;
+        mm = mm < 10 ? '0' + mm : mm;
+        let ss = Math.floor(msec / 1000);
+        msec -= ss * 1000;
+        ss = ss < 10 ? '0' + ss : ss;
+        $('#time').text(hh +':'+ mm + ':' + ss);
+    }
 }
 function btnClicked() {
     $('#infobtns').children('li').css('background-color', '#0F0F0F08');
@@ -62,7 +70,6 @@ function addToCart() {
         method: 'GET',
         dataType: 'json',
     }).done((json)=> {
-        console.log(json);
         if(json.isSuccess==false)
             alert(json.msg);
         else
@@ -80,8 +87,8 @@ function buy() {
         method: 'GET',
         dataType: 'json',
     }).done((json)=> {
-        console.log(json);
         alert('you bought it!');
+        window.location.reload();
     })
     .fail((jqXHR, textStatus, errorThrown)=> {
         console.log(errorThrown);
@@ -95,7 +102,6 @@ function remove() {
         method: 'GET',
         dataType: 'json',
     }).done((json)=> {
-        console.log(json);
         alert('product deleted!');
         window.location.href = 'http://localhost:8080/myapp/index.html';
     })
@@ -110,7 +116,10 @@ function logout() {
     Cookies.remove('username', {path:'/', domain:'localhost'});
     Cookies.remove('cart', {path:'/', domain:'localhost'});
     window.location.reload();
-};
+}
+function Search() {
+    $('#search-form')[0].submit();
+}
 function sendBid() {
     $('#bid-form #bid-user').val(userNameVal);
     $('#bid-form #bid-id').val(prdId);
@@ -120,6 +129,13 @@ function sendBid() {
     else
         $('#bid-form').submit();
 }
+function showOption(e) {
+    if($(this).closest('#search-form').length) 
+        $('#search-option').css('visibility', 'visible');
+    else 
+        $('#search-option').css('visibility', 'hidden');
+    e.stopPropagation();
+}
 
 //get brief infos from server.
 $.ajax({
@@ -128,15 +144,15 @@ $.ajax({
     method: 'GET',
     dataType: 'json'
 }).done((json)=> {
-    console.log(json);
     $('#product-img').attr('src', 'data:image/jpg;base64, '+ json.prd.img);
     $('#name').text(json.prd.prdName);
     $('#place').append(`<i class="fas fa-map-marker-alt">${json.prd.place}</i>`);
     $('#price').append(`&#8361;${json.prd.curPrice}`);
     $('#description').append('<p>'+json.prd.article+'</p>');
     $('#seller-name').text(json.prd.sellerName);
-    if(json.bid.bidderName)
-        $('#bidder-name').text('Current Bidder : '+json.bid.bidderName);
+    $('#phone').text('Tel:' + json.prd.phone);
+    if(json.prd.bidderName)
+        $('#bidder-name').text('Current Bidder : '+json.prd.bidderName);
 
     //if the product is already sold out.
     if(json.prd.isSold){
@@ -145,24 +161,50 @@ $.ajax({
         $('#time').css('font-family', 'Georgia, "Times New Roman", Times, serif');
         $('#bid-wrap').remove();
     }
+    // if the product is not sold out,
     else {
-        showTime(json.prd.endTime);
-        window.setInterval(showTime, 1000, json.prd.endTime);
-        curPrice = json.prd.curPrice;
+        let timeDiff = Date.parse(json.prd.endTime) - Date.now();
+
+        //when product auction is ended,
+        if(timeDiff < 0) {
+            $('#time').text('timeout');
+            $('#bid-form').remove();
+            $('#bid-cart').click(() => alert('Expired product cannot be added'));
+        }
+        else {
+            showTime(json.prd.endTime);
+            window.setInterval(showTime, 1000, json.prd.endTime);
+            curPrice = json.prd.curPrice;
+            $('#bid-cart').click(addToCart);
+        }
+
+
         //if seller name is same as user name.
         if(json.prd.sellerName == userNameVal) {
             $('#bid-buy').text('Remove');
             $('#bid-cart').text('Modify');
             $('#bid-buy').click(remove);
-            $('#bid-cart').click();
+            $('#bid-cart').click(modify);
             $('#bid-form').remove();
         }
         else {
-            $('#bid-cart').click(addToCart);
-            $('#bid-buy').click(buy);
             $('#bid-submit').click(sendBid);
-            if(json.prd.isBidding == false)
+            if(json.prd.isBidding == false) {
                 $('#bid-form').remove();
+                if(timeDiff < 0)
+                    $('#bid-buy').click( ()=>alert('Cannot buy expired item'))
+                else
+                    $('#bid-buy').click(buy);
+            }
+            else if(timeDiff < 0){
+                if(json.prd.bidderName == userNameVal)
+                    $('#bid-buy').click(buy);
+                else
+                    $('#bid-buy').click( ()=>alert('Only auction winner can buy it'))
+            }    
+            else{
+                $('#bid-buy').click( ()=>alert('Cannot buy currently bidding item!') );
+            }
         }
         //if it is added to wishlist, change appearance.
         if(json.wish.b_wish == true) {
@@ -171,9 +213,6 @@ $.ajax({
             $('#bid-wishlist').css('background-color', '#FC525C');
         }
     }
-
-
-
 })
 .fail((jqXHR, textStatus, errorThrown)=> {
     console.log('failed');
@@ -182,7 +221,8 @@ $.ajax({
 $('#infobtns').children('li').click(btnClicked);
 $('#comm-field').on('change input paste keyup', countChar);
 $('#bid-wishlist').click(addWishList);
-
+$('html *').click(showOption);
+$('#search-btn *').click(Search);
 //if cookie is not set, remove login and register button.
 if( !(userNameVal == undefined || userNameVal == null) ) {
     $('#auth').children().remove();

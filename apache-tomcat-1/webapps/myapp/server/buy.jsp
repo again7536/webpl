@@ -18,6 +18,7 @@
     String buyerName = request.getParameter("userName");
     String prdId = request.getParameter("prdId");
     String sql = "update product set buyerName=?, isSold=true where prdId=?";
+    PreparedStatement pstmt = null;
     try{
         Class.forName("org.mariadb.jdbc.Driver");
 
@@ -29,7 +30,7 @@
         );
 
     //query and connect to table 'product'
-        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, buyerName);
         pstmt.setString(2, prdId);
         pstmt.executeUpdate();
@@ -41,5 +42,8 @@
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jobj.toString());
+
+        if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+        if (conn != null) try { conn.close(); } catch(SQLException ex) {}
     }
 %>

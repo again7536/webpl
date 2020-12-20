@@ -19,13 +19,13 @@
     Connection conn = null;
     Boolean success = true;
     ResultSet rs = null;
-    PreparedStatement pstmt;
+    PreparedStatement pstmt = null;
 
     JSONArray jarr = new JSONArray();
     JSONObject jobj = null;
     try{
         Class.forName("org.mariadb.jdbc.Driver");
-        String sql = "select * from user";
+        String sql = "select * from user where isDeleted=false";
 
     //connect to database.
         conn = DriverManager.getConnection(
@@ -52,7 +52,13 @@
         success = false;
         e.printStackTrace();
     }
-    response.setContentType("application/json");
-    response.setCharacterEncoding("UTF-8");
-    response.getWriter().write(jarr.toString());
+    finally {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jarr.toString());
+        
+        if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+        if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+        if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+    }
 %>

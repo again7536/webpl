@@ -15,6 +15,7 @@
     request.setCharacterEncoding("utf-8");
     Connection conn = null;
     Boolean success = true;
+    PreparedStatement pstmt = null;
     String insertSql = "insert into wishlist(userName, prdId) values(?, ?)";
     String deleteSql = "delete from wishlist where userName=? and prdId=?";
     try{
@@ -31,7 +32,7 @@
         );
 
     //map variables to sql query and connect to table 'product'
-        PreparedStatement pstmt = conn.prepareStatement(b_wish ? insertSql : deleteSql);
+        pstmt = conn.prepareStatement(b_wish ? insertSql : deleteSql);
         pstmt.setString(1, userName);
         pstmt.setString(2, prdId);
         pstmt.executeUpdate();

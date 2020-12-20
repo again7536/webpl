@@ -37,10 +37,21 @@
         <h1><a href="../../index.html">Flea Market</a></h1>
       </div>
       <div class="two_quarter">
-        <form id="search-form" action="list.html" method="get">
-          <input type="text" id="search-bar" name="search-bar">
-          <!-- submit is implemented as div -->
-          <div id="search-btn" onclick="sendForm()"><i class="fas fa-search"></i></div>
+        <form id="search-form" action="http://localhost:8080/myapp/static/views/list.html" method="get">
+          <div id="search-box">
+            <input type="text" id="search-bar" name="product" autocomplete="off">
+            <!-- submit is implemented as div -->
+            <div id="search-btn"><i class="fas fa-search"></i></div>
+          </div>
+          <div id="search-option">
+            <div class="options">
+              Seller Name : <input type="text" name="seller">
+            </div>
+            <div class="options">
+              Price : <input type="text" name="min-price">
+              ~ <input type="text" name="max-price">
+            </div>
+          </div>
         </form>
       </div>
       <div class="one_quarter">
@@ -48,7 +59,7 @@
           <!-- there would be different thing inside -->
           <li><a href="profile.html"><i class="fas fa-user"></i>&nbsp;My</a></li>
           <li><a href="sell.html"><i class="fas fa-dollar-sign"></i>&nbsp;Sell</a></li>
-          <li><a href="#"><i class="fas fa-shopping-cart"></i>&nbsp;Cart</a></li>
+          <li><a href="cart.html"><i class="fas fa-shopping-cart"></i>&nbsp;Cart</a></li>
         </ul>
       </div>
       <!-- ################################################################################################ -->
@@ -63,21 +74,23 @@
     <img id="preview">
     <hr><h3>Title</h3>
     <input type="text" id="title" name="title">
-    <hr><h3>Price</h3>
-    <input type="text" id="price" name="price" placeholder="If it is 0, bidding would be active!">
+    <hr><h3>Bid</h3>
+    <input type="hidden" name="bid" value="false">
+    <input type="checkbox" id="bid" name="bid" value="true">
+    <br><h3>Price</h3>
+    <input type="text" id="price" name="price">
     <hr><h3>Date</h3>
     <input type="date" id="date" name="date">
-    <hr><h3>Time</h3>
+    <h3>Time</h3>
     <input type="time" id="time" name="time">
     <hr><h3>Place</h3>
     <input type="text" id="place" name="place">
     <hr><h3>Telephone</h3>
-    <input type="text" id="phone" name="phone">
+    <input type="text" id="phone" name="phone" placeholder="000-0000-0000">
     <hr><h3>Description</h3>
     <textarea id="article" name="article"></textarea>
-    <hr><h3>Tags</h3>
-    <input type="text" id="tags" name="tags">
-    <input id="username" name="username">
+    <input type="hidden" id="username" name="username">
+    <input type="hidden" id="prdId" name="prdId">
 </form>
 <div id="submit-wrap">
     <div id="submit-btn">Enroll</div>

@@ -16,6 +16,7 @@
     Connection conn = null;
     Boolean success = true;
     ResultSet rs = null;
+    PreparedStatement pstmt = null;
     String userName = null;
     String authPw = null;
     JSONObject jobj = new JSONObject();
@@ -23,7 +24,7 @@
         Class.forName("org.mariadb.jdbc.Driver");
         String userId = request.getParameter("userId");
         String userPw = request.getParameter("userPw");
-        String sqlUser = "select * from user where userId=\'"+userId+"\'";
+        String sqlUser = "select * from user where userId=\'"+userId+"\' and isDeleted=false";
 
     //connect to database.
         conn = DriverManager.getConnection(
@@ -33,7 +34,7 @@
         );
 
     //connect to table 'user' and query.
-        PreparedStatement pstmt = conn.prepareStatement(sqlUser);
+        pstmt = conn.prepareStatement(sqlUser);
         rs = pstmt.executeQuery();
         if(!rs.next()) success = false;
         else {
@@ -46,14 +47,20 @@
         success = false;
         e.printStackTrace();
     }
-    if(success) {
-        Cookie cookie = new Cookie("username", userName);
-        cookie.setDomain("localhost");
-        cookie.setPath("/");
-        response.addCookie(cookie);
+    finally {
+        if(success) {
+            Cookie cookie = new Cookie("username", userName);
+            cookie.setDomain("localhost");
+            cookie.setPath("/");
+            response.addCookie(cookie);
+        }
+        jobj.put("isSuccess", success);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jobj.toString());
+
+        if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+        if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+        if (conn != null) try { conn.close(); } catch(SQLException ex) {}
     }
-    jobj.put("isSuccess", success);
-    response.setContentType("application/json");
-    response.setCharacterEncoding("UTF-8");
-    response.getWriter().write(jobj.toString());
 %>

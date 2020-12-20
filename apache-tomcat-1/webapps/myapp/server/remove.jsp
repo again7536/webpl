@@ -15,6 +15,7 @@
     request.setCharacterEncoding("utf-8");
     Connection conn = null;
     Boolean success = true;
+    PreparedStatement pstmt= null;
     String deleteSql = "delete from product where prdId=?";
     try{
         Class.forName("org.mariadb.jdbc.Driver");
@@ -27,7 +28,7 @@
         );
 
     //map variables to sql query and connect to table 'product'
-        PreparedStatement pstmt = conn.prepareStatement(deleteSql);
+        pstmt = conn.prepareStatement(deleteSql);
         pstmt.setString(1, prdId);
         pstmt.executeUpdate();
     } catch (Exception e) {

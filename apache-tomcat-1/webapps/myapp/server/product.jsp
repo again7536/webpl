@@ -46,8 +46,9 @@
             Boolean isBidding = rs.getBoolean(9);
             Boolean isSold = rs.getBoolean(10);
             String article = rs.getString(11);
+            String phone = rs.getString(12);
+            String bidderName = rs.getString(13);
 
-            
             jobj.put("prdId", prdId);
             jobj.put("prdName", prdName);
             jobj.put("sellerName", sellerName);
@@ -58,6 +59,8 @@
             jobj.put("endTime", endTime.toString());
             jobj.put("img", Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get(imgUrl))));
             jobj.put("article", article);
+            jobj.put("phone", phone);
+            jobj.put("bidderName", bidderName);
         }
         wrap.put("prd", jobj);
 
@@ -89,5 +92,11 @@
         isSuccess = false;
         e.printStackTrace();
     }
-    if(!isSuccess) response.sendRedirect("http://localhost:8080/myapp/index.html");
+    finally {
+        if(!isSuccess) response.sendRedirect("http://localhost:8080/myapp/index.html");
+
+        if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+        if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+        if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+    }
 %>

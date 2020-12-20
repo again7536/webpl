@@ -16,10 +16,14 @@
     request.setCharacterEncoding("utf-8");
     JSONObject jobj = new JSONObject();
     Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
     Boolean success = true;
     String prdId = request.getParameter("prdId");
     String userName = request.getParameter("userName");   
-    String sql = "insert into shopping(prdId, userName) values(?,?)";
+    String cartSql = "insert into shopping(prdId, userName) values(?,?)";
+    String cartCheckSql = "select * from shopping where prdId=? and userName=?";
     try{
         Class.forName("org.mariadb.jdbc.Driver");
 
@@ -31,15 +35,22 @@
         );
 
     //query and connect to table 'product'
-        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt = conn.prepareStatement(cartCheckSql);
         pstmt.setString(1, prdId);
         pstmt.setString(2, userName);
-        pstmt.executeUpdate();
-
-    } catch(SQLIntegrityConstraintViolationException e){
-        success = false;
-        jobj.put("msg", "This item has been already added!");
-    } catch (Exception e) {
+        rs = pstmt.executeQuery();
+        if(rs.next()) {
+            success = false;
+            jobj.put("msg", "This item has been already added!");
+        }
+        else {
+            pstmt = conn.prepareStatement(cartSql);
+            pstmt.setString(1, prdId);
+            pstmt.setString(2, userName);
+            pstmt.executeUpdate();
+        }
+    }
+    catch (Exception e) {
         success = false;
         e.printStackTrace();
     } finally {
@@ -47,5 +58,8 @@
         response.getWriter().write(jobj.toString());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+
+        if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+        if (conn != null) try { conn.close(); } catch(SQLException ex) {}
     }
 %>

@@ -36,10 +36,21 @@
         <h1><a href="../../index.html">Flea Market</a></h1>
       </div>
       <div class="two_quarter">
-        <form id="search-form" action="list.html" method="get">
-          <input type="text" id="search-bar" name="search-bar">
-          <!-- submit is implemented as div -->
-          <div id="search-btn" onclick="sendForm()"><i class="fas fa-search"></i></div>
+        <form id="search-form" action="http://localhost:8080/myapp/static/views/list.html" method="get">
+          <div id="search-box">
+            <input type="text" id="search-bar" name="product" autocomplete="off">
+            <!-- submit is implemented as div -->
+            <div id="search-btn"><i class="fas fa-search"></i></div>
+          </div>
+          <div id="search-option">
+            <div class="options">
+              Seller Name : <input type="text" name="seller">
+            </div>
+            <div class="options">
+              Price : <input type="text" name="min-price">
+              ~ <input type="text" name="max-price">
+            </div>
+          </div>
         </form>
       </div>
       <div class="one_quarter">

@@ -19,14 +19,15 @@
     Connection conn = null;
     Boolean success = true;
     ResultSet rs = null;
-    PreparedStatement pstmt;
+    PreparedStatement pstmt = null;
 
     JSONArray jarr = new JSONArray();
     JSONObject jobj = null;
     try{
         Class.forName("org.mariadb.jdbc.Driver");
         String userName = request.getParameter("username");
-        String sqlWish = "select prdId from wishlist where userName=\'"+userName+"\'";
+        String sqlWish = "select a.* from product a, wishlist b where b.userName=? and a.prdId=b.prdId";
+        String sqlDel = "delete b.* from product a, wishlist b where a.prdId = b.prdId and a.isSold = true and b.userName=?";
 
     //connect to database.
         conn = DriverManager.getConnection(
@@ -35,38 +36,47 @@
             "dev001"
         );
 
+        pstmt = conn.prepareStatement(sqlDel);
+        pstmt.setString(1, userName);
+        pstmt.executeUpdate();
+
     //connect to table 'wishlist' and query.
         pstmt = conn.prepareStatement(sqlWish);
+        pstmt.setString(1, userName);
         rs = pstmt.executeQuery();
         while(rs.next()){
-            int prdId = rs.getInt(1);
-            pstmt = conn.prepareStatement("select * from product where prdId=\'"+prdId+"\'");
-            ResultSet rsWish = pstmt.executeQuery();
-
             jobj = new JSONObject();
-            if(rsWish.next()){
-                String prdName = rsWish.getString(2);
-                int curPrice = rsWish.getInt(5);
-                String place = rsWish.getString(7);
-                String imgUrl = rsWish.getString(8);
-                Boolean isBidding = rsWish.getBoolean(9);
-                Boolean isSold = rsWish.getBoolean(10);
+            int prdId = rs.getInt(1);
+            String prdName = rs.getString(2);
+            int curPrice = rs.getInt(5);
+            java.sql.Timestamp endTime = rs.getTimestamp(6);
+            String place = rs.getString(7);
+            String imgUrl = rs.getString(8);
+            Boolean isBidding = rs.getBoolean(9);
+            Boolean isSold = rs.getBoolean(10);
 
-                jobj.put("prdId", prdId);
-                jobj.put("prdName", prdName);
-                jobj.put("curPrice", curPrice);
-                jobj.put("place", place);
-                jobj.put("isBidding", isBidding);
-                jobj.put("isSold", isSold);
-                jobj.put("img", Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get(imgUrl))));
-                jarr.add(jobj);
-            }
+            jobj.put("prdId", prdId);
+            jobj.put("prdName", prdName);
+            jobj.put("curPrice", curPrice);
+            jobj.put("endTime", endTime.toString());
+            jobj.put("place", place);
+            jobj.put("isBidding", isBidding);
+            jobj.put("isSold", isSold);
+            jobj.put("img", Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get(imgUrl))));
+            jarr.add(jobj);
         }
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
         success = false;
         e.printStackTrace();
     }
-    response.setContentType("application/json");
-    response.setCharacterEncoding("UTF-8");
-    response.getWriter().write(jarr.toString());
+    finally {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jarr.toString());
+        
+        if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+        if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+        if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+    }
 %>

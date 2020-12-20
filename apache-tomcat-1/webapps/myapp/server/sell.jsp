@@ -21,8 +21,8 @@
     String realPath = request.getSession().getServletContext().getRealPath("/static/images/product/");
     ResultSet rs = null;
     Connection conn = null;
+    PreparedStatement pstmt = null;
     String sqlProduct = "insert into product(prdName, sellerName, buyerName, curPrice, endTime, place, imgUrl, isBidding, isSold, article, phone) values(?, ?, ?, ? ,? ,?, ?, ?, ?, ?, ?)";
-    String sqlTags = "insert into tags(prdName, sellerName, tag) values(?, ?, ?)";
     Boolean success = true;
     try{
         Class.forName("org.mariadb.jdbc.Driver");
@@ -42,21 +42,17 @@
     //Get other items from multipart request.
         String title = multiReq.getParameter("title");
         String sellerName = multiReq.getParameter("username");
+        Boolean isBidding = multiReq.getParameter("bid").equals("true") ? true : false;
         int price = Integer.parseInt(multiReq.getParameter("price"));
         int curPrice = price;
         String dateStr = multiReq.getParameter("date");
         String timeStr = multiReq.getParameter("time");
         String imgUrl = realPath + newFileName;
-        Boolean isBidding = false;
         Boolean isSold = false;
         String place = multiReq.getParameter("place");
-        String tags = multiReq.getParameter("tags");
         String article = multiReq.getParameter("article");
         String phone = multiReq.getParameter("phone");
-
-        if(price == 0) {
-            isBidding = true;
-        }        
+   
         Date date=new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(dateStr + " " + timeStr);
         java.sql.Timestamp ts = new java.sql.Timestamp(date.getTime());
         
@@ -68,7 +64,7 @@
         );
 
     //map variables to sql query and connect to table 'product'
-        PreparedStatement pstmt = conn.prepareStatement(sqlProduct);
+        pstmt = conn.prepareStatement(sqlProduct);
         pstmt.setString(1, title);
         pstmt.setString(2, sellerName);
         pstmt.setNull(3, java.sql.Types.CHAR);
@@ -82,14 +78,6 @@
         pstmt.setString(11, phone);
         pstmt.executeUpdate();
 
-    //map variables to sql query and connect to table 'tags'
-        //for(String tag: tags){
-        pstmt = conn.prepareStatement(sqlTags);
-        pstmt.setString(1, title);
-        pstmt.setString(2, sellerName);
-        pstmt.setString(3, tags);
-        pstmt.executeUpdate();
-        //}
     } catch (Exception e) {
         success = false;
         e.printStackTrace();

@@ -25,6 +25,9 @@ function logout() {
 function initialize() {
     $('#datas').html('');
 }
+function Search() {
+    $('#search-form')[0].submit();
+}
 function getBidHistory() {
     $('.prd-up').html('&#11206;');
     $('.prd-up').off('click');
@@ -32,7 +35,6 @@ function getBidHistory() {
     $('.prd-up').attr('class', 'prd-down');
     $('.history').remove();
     const prdId = $(this).prev().children('.prd-hid').text();
-    console.log(prdId);
     //get brief infos from server.
     $.ajax({
         url: 'http://localhost:8080/myapp/server/history.jsp',
@@ -40,14 +42,13 @@ function getBidHistory() {
         method: 'GET',
         dataType: 'json'
     }).done((json)=> {
-        console.log(json);
         $(this).parent().after('<div class="history"></div>');
         for(hist of json) {
             $('.history').append(
                 `<div class="hist-item">
-                    <div class="hist-time">${hist.time}</div>\
                     <div class="hist-name">${hist.bidderName}</div>
-                    <div class="hist-price">${hist.price}</div>\
+                    <div class="hist-time">${hist.time}</div>\
+                    <div class="hist-price">&#8361;${hist.price}</div>\
                 </div>`);
         }
         $(this).attr('class', 'prd-up');
@@ -77,22 +78,29 @@ function getWishList() {
     }).done((json)=> {
         console.log(json);
         for(prd of json) {
+            let diff = Date.parse(prd.endTime) - Date.now();
             $('#datas').append(`<div class="item">\
                                     <div class="prd-data">\
-                                        <div class="prd-hid" hidden>${prd.prdId}</div>
+                                        <div class="prd-hid" hidden>${prd.prdId}</div>\
                                         <img src='data:image/jpg;base64, ${prd.img}'>\
                                         <div class="prd-info">\
-                                            <h2>${prd.prdName}</h2>\
-                                            <h3><i class="fas fa-map-marker-alt"></i>${prd.place}</h3><hr>\
-                                            <h4>${prd.isSold?'sold out':prd.isBidding?'currently on bidding':'on sale as'}</h4>\
-                                            <h4>&#8361;${prd.curPrice}</h4>
+                                            <div class="prd-name">\
+                                                <h2>${prd.prdName}</h2><hr>\
+                                                <h3><i class="fas fa-map-marker-alt"></i>${prd.place}</h3>\
+                                            </div>\
+                                            <div class="prd-like"></div>\
+                                            <div class="prd-status">\
+                                                <h4>${prd.isSold?'sold out':diff<0?'timeout':prd.isBidding?'currently on bidding':'on sale as'}</h4>\
+                                                <h4>&#8361;${prd.curPrice}</h4>\
+                                            </div>\
                                         </div>\
                                     </div>\
                                 </div>`);
         }
         $('.prd-data').click(goProduct);
     }).fail((jqXHR, textStatus, errorThrown)=> {
-        console.log('failed');
+        console.log(jqXHR);
+        console.log(errorThrown);
     });
 }
 function getSellList() {
@@ -104,19 +112,26 @@ function getSellList() {
         method: 'GET',
         dataType: 'json'
     }).done((json)=> {
-        console.log(json);
         for(prd of json) {
-            $('#datas').append(`<div class="item">
+            let diff = Date.parse(prd.endTime) - Date.now();
+            $('#datas').append(`<div class="item">\
                                     <div class="prd-data"><img src='data:image/jpg;base64, ${prd.img}'>\
                                         <div class="prd-hid" hidden>${prd.prdId}</div>
                                         <div class="prd-info">\
-                                            <h2>${prd.prdName}</h2>\
-                                            <h3><i class="fas fa-map-marker-alt"></i>${prd.place}</h3><hr>\
-                                            <h4>${prd.isSold?'sold out':prd.isBidding?'currently on bidding':'on sale as'}</h4>\
-                                            <h4>&#8361;${prd.curPrice}</h4>
+                                            <div class="prd-name">\
+                                                <h2>${prd.prdName}</h2><hr>\
+                                                <h3><i class="fas fa-map-marker-alt"></i>${prd.place}</h3>\
+                                            </div>\
+                                            <div class="prd-like">\
+                                                <h4>&#10084;${prd.like}</h4>\
+                                            </div>\
+                                            <div class="prd-status">\
+                                                <h4>${prd.isSold?'sold out':diff<0?'timeout':prd.isBidding?'currently on bidding':'on sale as'}</h4>\
+                                                <h4>&#8361;${prd.curPrice}</h4>\
+                                            </div>\
                                         </div>\
-                                    </div>
-                                    <div class="prd-down">&#11206;</div>
+                                    </div>\
+                                    <div class="prd-down">&#11206;</div>\
                                 </div>`);
         }
         $('.prd-data').click(goProduct);
@@ -134,17 +149,22 @@ function getBuyList() {
         method: 'GET',
         dataType: 'json'
     }).done((json)=> {
-        console.log(json);
         for(prd of json) {
+            let diff = Date.parse(prd.endTime) - Date.now();
             $('#datas').append(`<div class="item">\
                                     <div class="prd-data">\
-                                        <div class="prd-hid" hidden>${prd.prdId}</div>
+                                        <div class="prd-hid" hidden>${prd.prdId}</div>\
                                         <img src='data:image/jpg;base64, ${prd.img}'>\
                                         <div class="prd-info">\
-                                            <h2>${prd.prdName}</h2>\
-                                            <h3><i class="fas fa-map-marker-alt"></i>${prd.place}</h3><hr>\
-                                            <h4>${prd.isSold?'sold out':prd.isBidding?'currently on bidding':'on sale as'}</h4>\
-                                            <h4>&#8361;${prd.curPrice}</h4>
+                                            <div class="prd-name">\
+                                                <h2>${prd.prdName}</h2><hr>\
+                                                <h3><i class="fas fa-map-marker-alt"></i>${prd.place}</h3>\
+                                            </div>\
+                                            <div class="prd-like"></div>\
+                                            <div class="prd-status">\
+                                                <h4>${prd.isSold?'sold out':diff<0?'timeout':prd.isBidding?'currently on bidding':'on sale as'}</h4>\
+                                                <h4>&#8361;${prd.curPrice}</h4>\
+                                            </div>\
                                         </div>\
                                     </div>\
                                 </div>`);
@@ -153,6 +173,13 @@ function getBuyList() {
     }).fail((jqXHR, textStatus, errorThrown)=> {
         console.log('failed');
     });
+}
+function showOption(e) {
+    if($(this).closest('#search-form').length) 
+        $('#search-option').css('visibility', 'visible');
+    else 
+        $('#search-option').css('visibility', 'hidden');
+    e.stopPropagation();
 }
 
 //if cookie is not set, return to home.
@@ -177,11 +204,16 @@ else {
         data: { username: userNameVal },
         method: 'GET',
         dataType: 'json'
-    }).done((json)=> {
-        console.log(json);
+    })
+    .done((json)=> {
         $('#greeting').text(json.greeting);
-    }).fail((jqXHR, textStatus, errorThrown)=> {
+    })
+    .fail((jqXHR, textStatus, errorThrown)=> {
         console.log('failed');
     });
+    
     getSellList();
+    $('html *').click(showOption);
+    $('#search-btn *').click(Search);
 }
+

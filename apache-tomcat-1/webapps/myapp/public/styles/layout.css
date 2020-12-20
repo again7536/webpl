@@ -43,19 +43,26 @@ Modified by Junyoung Lee in 2020.11.04
 
 #header strong{display:block;}
 
-/*#header form label::before{position:absolute; top:1px; right:1px; width:30px; height:48px; padding:0; content:""; pointer-events:none;}
-#header form label::after{position:absolute; top:14px; right:5px; width:20px; height:20px; padding:0; content:"\00ab"; transform:rotate(-90deg); font-size:26px; font-weight:700; line-height:.65; text-align:center; pointer-events:none;}
-#header form label select{display:inline-block; width:100%; height:50px; margin:0; padding:3px 30px 3px 8px; border:1px solid; -webkit-appearance:none; -moz-appearance:none; appearance:none; cursor:pointer;}
-#header form label select::-ms-expand{display:none; removes the standard arrow in IE 10 + 11 }*/
-#header form {display:flex; align-items:center; height:50px; border:5px solid #8BAAD6; font-size:18pt; padding:0 15px 0 15px;}
-#header form #search-bar{height:100%; width:100%; border:none;}
-#header form #search-bar:focus{outline:none;}
-#header form #search:hover{cursor:pointer;}
-
 #header ul li {display:inline-block; float:none; margin-right:10px; padding-right:10px;border-right:1px solid grey;}
 #header ul li:last-child{border:none;}
 #header div:last-child{margin-bottom:0;}/* Used when elements stack in small viewports */
 
+/*#header form label::before{position:absolute; top:1px; right:1px; width:30px; height:48px; padding:0; content:""; pointer-events:none;}
+#header form label::after{position:absolute; top:14px; right:5px; width:20px; height:20px; padding:0; content:"\00ab"; transform:rotate(-90deg); font-size:26px; font-weight:700; line-height:.65; text-align:center; pointer-events:none;}
+#header form label select{display:inline-block; width:100%; height:50px; margin:0; padding:3px 30px 3px 8px; border:1px solid; -webkit-appearance:none; -moz-appearance:none; appearance:none; cursor:pointer;}
+#header form label select::-ms-expand{display:none; removes the standard arrow in IE 10 + 11 }*/
+
+#search-form *, #search-form *::before, #search-form *::after {transition:none;}
+#search-form #search-bar{height:100%; width:100%; border:none;}
+#search-form #search-bar:focus{outline:none;}
+#search-form #search:hover{cursor:pointer;}
+
+#search-form #search-option {position:absolute; width:47.89473%; max-width:546px; visibility:hidden; }
+#search-form #search-option .options {position:relative; height:50px; z-index:999;}
+#search-form #search-box {display:flex; align-items:center;height:50px; border:5px solid #8BAAD6; font-size:18pt; padding:0 15px 0 15px;}
+
+#search-option .options {display:flex; justify-content:left; align-items:center; color:#8BAAD6; background-color:#000000A0; padding: 0 10px; font-size:14pt;}
+#search-option .options input{margin:0 10px; width:20%; background-color : #FFFFFFC0; border:none; color:black;}
 
 /* Page Intro
 --------------------------------------------------------------------------------------------------------------- */

@@ -51,7 +51,13 @@
         isSuccess = false;
         e.printStackTrace();
     }
-    response.setContentType("application/json");
-    response.setCharacterEncoding("UTF-8");
-    response.getWriter().write(jarr.toString());
+    finally {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jarr.toString());
+
+        if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+        if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+        if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+    }
 %>

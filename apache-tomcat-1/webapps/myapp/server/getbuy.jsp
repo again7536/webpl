@@ -19,14 +19,14 @@
     Connection conn = null;
     Boolean success = true;
     ResultSet rs = null;
-    PreparedStatement pstmt;
+    PreparedStatement pstmt = null;
 
     JSONArray jarr = new JSONArray();
     JSONObject jobj = null;
     try{
         Class.forName("org.mariadb.jdbc.Driver");
         String userName = request.getParameter("username");
-        String sql = "select * from product where buyerName=\'"+userName+"\'";
+        String sql = "select * from product where buyerName=?";
 
     //connect to database.
         conn = DriverManager.getConnection(
@@ -37,12 +37,14 @@
 
     //connect to table 'wishlist' and query.
         pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, userName);
         rs = pstmt.executeQuery();
         while(rs.next()){
             jobj = new JSONObject();
             int prdId = rs.getInt(1);
             String prdName = rs.getString(2);
             int curPrice = rs.getInt(5);
+            java.sql.Timestamp endTime = rs.getTimestamp(6);
             String place = rs.getString(7);
             String imgUrl = rs.getString(8);
             Boolean isBidding = rs.getBoolean(9);
@@ -50,6 +52,7 @@
 
             jobj.put("prdId", prdId);
             jobj.put("prdName", prdName);
+            jobj.put("endTime", endTime.toString());
             jobj.put("place", place);
             jobj.put("curPrice", curPrice);
             jobj.put("img", Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get(imgUrl))));
@@ -61,7 +64,14 @@
     catch (Exception e) {
         e.printStackTrace();
     }
-    response.setContentType("application/json");
-    response.setCharacterEncoding("UTF-8");
-    response.getWriter().write(jarr.toString());
+    finally {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jarr.toString());
+
+        if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+        if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+        if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+    }
+    
 %>

@@ -15,6 +15,7 @@
 <%
     request.setCharacterEncoding("utf-8");
     Connection conn = null;
+    PreparedStatement pstmt = null;
     String sqlUser = "insert into user(userId, userPw, userName) values(?, ?, ?)";
     Boolean success = true;
     JSONObject jobj = new JSONObject();
@@ -32,7 +33,7 @@
         );
 
     //map variables to sql query and connect to table 'product'
-        PreparedStatement pstmt = conn.prepareStatement(sqlUser);
+        pstmt = conn.prepareStatement(sqlUser);
         pstmt.setString(1, userId);
         pstmt.setString(2, userPw);
         pstmt.setString(3, userName);
